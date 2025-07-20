@@ -1,10 +1,10 @@
 const { parse } = require('pg-connection-string');
 
 module.exports = ({ env }) => {
-  const client = env('DATABASE_CLIENT', 'postgres'); // Default to postgres
   const connectionString = env('DATABASE_URL');
 
   if (!connectionString) {
+    console.error('DATABASE_URL environment variable is not set. Cannot connect to database.');
     throw new Error('DATABASE_URL environment variable is not set.');
   }
 
@@ -12,7 +12,7 @@ module.exports = ({ env }) => {
 
   return {
     connection: {
-      client: client,
+      client: 'postgres',
       connection: {
         host,
         port,
